@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import pl.akademiaqa.factory.BrowserFactory;
 import pl.akademiaqa.utils.Properties;
 import pl.akademiaqa.utils.StringUtils;
+
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,9 @@ public class BaseTest {
 
     @BeforeAll
     void launchBrowser() {
+
+        System.out.println("READING SECRETS FROM GT" + Properties.getProperty("API_KEY"));
+        System.out.println("READING VARIABLES FROM GT" + Properties.getProperty("UI_URL"));
         browserFactory = new BrowserFactory();
         browser = browserFactory.getBrowser();
     }
@@ -48,7 +52,7 @@ public class BaseTest {
     void closeContext(TestInfo testInfo) {
         if (isTracingEnabled()) {
             String traceName = "traces/trace_"
-                    + StringUtils.                                                                                                                                                          removeRoundBrackets(testInfo.getDisplayName())
+                    + StringUtils.removeRoundBrackets(testInfo.getDisplayName())
                     + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(Properties.getProperty("tracing.data.format"))) + ".zip";
             browserContext.tracing().stop(new Tracing.StopOptions().setPath(Paths.get(traceName)));
         }
@@ -62,7 +66,7 @@ public class BaseTest {
         browserFactory.getPlaywright().close();
     }
 
-    private Boolean isTracingEnabled(){
+    private Boolean isTracingEnabled() {
         return Boolean.parseBoolean(Properties.getProperty("tracing.enabled"));
     }
 
