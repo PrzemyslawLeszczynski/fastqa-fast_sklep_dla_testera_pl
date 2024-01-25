@@ -25,8 +25,8 @@ public class BaseTest {
     @BeforeAll
     void launchBrowser() {
 
-        System.out.println("READING SECRETS FROM GT" + Properties.getProperty("API_KEY"));
-        System.out.println("READING VARIABLES FROM GT" + Properties.getProperty("UI_URL"));
+        System.out.println("READING SECRETS FROM GT" + System.getProperty("API_KEY"));
+        System.out.println("READING VARIABLES FROM GT" + System.getProperty("UI_URL"));
         browserFactory = new BrowserFactory();
         browser = browserFactory.getBrowser();
     }
